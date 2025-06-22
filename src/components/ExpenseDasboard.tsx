@@ -20,7 +20,7 @@ interface Sum {
 
 const ExpenseDasboard = () => {
   const [ filter , setFilter ] = useState<Filter>('all')
-  const [ item , setItem ] = useState<Sum[]>([])
+  const [ , setItem ] = useState<Sum[]>([])
   const [ total , setTotal ] = useState(0)
   const [ income , setIncome ] = useState(0)
   const [ expense , setExpense ] = useState(0)
@@ -42,10 +42,6 @@ const ExpenseDasboard = () => {
         }
       }, [])
   
-      useEffect(() => {
-        localStorage.setItem('expense' , JSON.stringify(item))
-      }, [item])
-
   return (
     <div className="flex flex-col space-y-4 mt-4">
       <div className="flex gap-4 w-full overflow-x-auto no-scrollbar space-x-2 min-w-[80px]">
