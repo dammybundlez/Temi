@@ -1,0 +1,38 @@
+.content::before{
+    content: '';
+    width: 0.5rem;
+    display: block;
+    height: 1rem;
+    background-color: #c6e6b8;
+    border-radius: 2px;
+    margin-top: 5px;
+}
+
+
+.spent::before{
+    content: '';
+    width: 0.5rem;
+    display: block;
+    height: 1rem;
+    background-color: rgb(188, 62, 62);
+    border-radius: 2px;
+    margin-top: 5px;
+}
+
+.total::before{
+    content: '';
+    width: 0.5rem;
+    display: block;
+    height: 1rem;
+    background-color: rgb(235, 217, 16);
+    border-radius: 2px;
+    margin-top: 5px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
