@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { FaAngleRight } from 'react-icons/fa'
-import { MdAttachMoney, MdCelebration, MdOutlineFastfood } from 'react-icons/md'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 
 interface Transactions {
     id : string,
@@ -39,7 +38,7 @@ const Transactions = () => {
     <div className='flex flex-col space-y-3 lg:w-[50%]'>
       <div className='flex justify-between items-center'>
         <h4 className='text-xl text-gray-500'>Recent transactions</h4>
-        <button className='flex items-center justify-between gap-4 rounded-full border-2 hover:border-[#c6e6b8] px-3 py-1 text-gray-500'><Link to='/transactions'>See All</Link><FaAngleRight /></button>
+        <Link to='/transactions'><button className='flex items-center justify-between gap-4 rounded-full border-2 hover:border-[#c6e6b8] px-3 py-1 text-gray-500'>See All<FaAngleRight /></button></Link>
       </div>
        {items.length === 0 && (
           <p className="text-gray-400 text-sm italic">No Expenses yet.</p>

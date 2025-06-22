@@ -75,12 +75,12 @@ const AddExpense = () => {
             <div className='flex flex-col space-y-5 md:flex-row lg:flex-row md:justify-between lg:justify-between md:gap-6 lg:gap-5'>
                 <div className='flex flex-col space-y-4 md:w-full lg:w-full'>
                     <div className='wave-group bg-slate-100 py-6 rounded-md'>
-                        <input value={amount} onChange={(e) => setAmount(e.target.value)} required type="number"
+                        <input value={amount} onChange={(e) => setAmount(e.target.value)} required type="number" title='amount' id='amount' name='amount' placeholder='$'
                                 min="0"
                                 step="0.01"
                                 inputMode="decimal" className='input mt-3' />
                         <span className="bar"></span>
-                        <label htmlFor="" className='label '>
+                        <label className='label' id="label" htmlFor='amount' >
                             <span className="label-char" style={{ ['--index' as any]: 0 }}>A</span>
                             <span className="label-char" style={{ ['--index' as any]: 1 }}>m</span>
                             <span className="label-char" style={{ ['--index' as any]: 2 }}>o</span>
@@ -118,7 +118,9 @@ const AddExpense = () => {
                                     >
                                     <input
                                         type="checkbox"
-                                        className="hidden peer"        
+                                        className="hidden peer" 
+                                        title='checkbox'  
+                                        name='check'     
                                     />
                                     <div className="w-5 h-5 rounded-full border-2 border-[#c6e6b8] flex items-center justify-center peer-checked:bg-green-100">
                                         <div className={`w-2.5 h-2.5 rounded-full bg-[#c6e6b8] peer-checked:block ${payment === e ? 'block' : 'hidden'}`}></div>
@@ -137,7 +139,7 @@ const AddExpense = () => {
                 <button onClick={addExpense} className='bg-[#c6e6b8] font-bold rounded-3xl p-4 w-1/2'>Add</button>
             </div>
         </div>
-      <button onClick={handleShow} className='fixed right-4 bottom-4 z-[-40] bg-[#c6e6b8] rounded-full p-7 opacity-80'><FaPlus className='w-7 h-7 font-light'/></button>
+      <button onClick={handleShow} title='button'  className='fixed right-4 bottom-4 z-[-40] bg-[#c6e6b8] rounded-full p-7 opacity-80'> <FaPlus className='w-7 h-7 font-light'/> </button>
     </div>
   )
 }

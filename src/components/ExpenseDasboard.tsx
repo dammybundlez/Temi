@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import '../styles/ExpenseDasboard.css'
 import PieChart from "./PieChart"
 
@@ -39,9 +39,12 @@ const ExpenseDasboard = () => {
           setIncome(income)
           setExpense(expense)
           setTotal(total)
-
         }
       }, [])
+  
+      useEffect(() => {
+        localStorage.setItem('expense' , JSON.stringify(item))
+      }, [item])
 
   return (
     <div className="flex flex-col space-y-4 mt-4">
