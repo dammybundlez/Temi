@@ -6,7 +6,7 @@ type Filter = 'all' | 'daily' | 'weekly' | 'monthly' | 'yearly'
 
 interface Sum {
   id : string;
-  amount : string;
+  amount : string | number;
   type : 'income' | 'expense' ;
 }
 
@@ -18,22 +18,21 @@ interface Sum {
     maximumFractionDigits: 2,
   }).format(value);
 
-const ExpenseDasboard = () => {
+interface ExpenseDashboardProps {
+  expenses: Sum[]
+}
+
+const ExpenseDasboard = ({ expenses } : ExpenseDashboardProps) => {
   const [ filter , setFilter ] = useState<Filter>('all')
-  const [ , setItem ] = useState<Sum[]>([])
+  const [ item , setItem ] = useState<Sum[]>([])
   const [ total , setTotal ] = useState(0)
   const [ income , setIncome ] = useState(0)
   const [ expense , setExpense ] = useState(0)
 
-
-  useEffect(() => {
-        const stored = localStorage.getItem('expense')
-        if(stored){
-          const p : Sum[] = JSON.parse(stored);
-          setItem(p)
-
-          const income = p.filter(t => t.type === 'income').reduce((sum , t) => sum + Number(t.amount) , 0)
-          const expense = p.filter(t => t.type === 'expense').reduce((sum , t) => sum + Number(t.amount) , 0)
+      useEffect(() => {
+          if (Array.isArray(expenses)) {  
+          const income = expenses.filter(t => t.type === 'income').reduce((sum , t) => sum + Number(t.amount) , 0)
+          const expense = expenses.filter(t => t.type === 'expense').reduce((sum , t) => sum + Number(t.amount) , 0)
           const total = (income + expense)
 
           setIncome(income)
@@ -42,6 +41,10 @@ const ExpenseDasboard = () => {
         }
       }, [])
   
+      useEffect(() => {
+        localStorage.setItem('expense' , JSON.stringify(item))
+      }, [item])
+
   return (
     <div className="flex flex-col space-y-4 mt-4">
       <div className="flex gap-4 w-full overflow-x-auto no-scrollbar space-x-2 min-w-[80px]">

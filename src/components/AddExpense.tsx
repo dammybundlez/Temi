@@ -17,8 +17,12 @@ interface Expense  {
 }
 type Type = 'income' | 'expense'
 
-const AddExpense = () => {
-    const [ expense , setExpense ] = useState<Expense[]>([])
+interface AddExpenseProps {
+  expense: Expense[];
+  setExpense: React.Dispatch<React.SetStateAction<Expense[]>>;
+}
+
+const AddExpense = ({ expense , setExpense } : AddExpenseProps) => {
     const [ amount , setAmount ] = useState('')
     const [ category , setCategory ] = useState<string>('')
     const [ payment , setPayment] = useState<PaymentType>('Cash')
@@ -27,16 +31,19 @@ const AddExpense = () => {
     const [ type , setType ] = useState<Type>('income')
 
     useEffect(() => {
-    setHasMounted(true);
-    const saved = typeof window !== 'undefined' && localStorage.getItem('expense');
-    if (saved) {
-      try {
-        setExpense(JSON.parse(saved));
-      } catch (err) {
-        console.error('Failed to parse localStorage:', err);
-      }
-    }
-  }, []);
+        setHasMounted(true);
+        const saved = typeof window !== 'undefined' && localStorage.getItem('expense');
+        if (saved) {
+        try {
+            const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+            setExpense(parsed);
+            }
+        } catch (err) {
+           console.error('Failed to parse localStorage:', err);
+        }
+        }
+    }, []);
 
   useEffect(() => {
     if (hasMounted) {
@@ -59,6 +66,7 @@ const AddExpense = () => {
         setAmount('');
         setCategory('')
         setIsShow(!isShow)
+        localStorage.setItem('expense', JSON.stringify([ ...expense , newExpense ]))
     }
 
     const handleShow = () => {
@@ -108,8 +116,7 @@ const AddExpense = () => {
                 <div className='lg:w-full md:w-full'>
                     <h2 className='mb-3 text-xl'>Payment Type</h2>
                     <div className='flex flex-col gap-2 md:gap-4 md:w-full lg:w-full'>
-                        {(['Cash' , 'Credit/Debit Card' , 'Check' ] as PaymentType[]).map(e => (
-                            <>
+                        {(['Cash' , 'Credit/Debit Card' , 'Check' ] as PaymentType[]).map(e => (     
                             <button key={e} onClick={() => setPayment(e)}
                                 className={`py-3 px-2 rounded-3xl text-md text-black border-2 font-medium transition flex items-center gap-2 w-48
                                     ${payment === e
@@ -129,7 +136,6 @@ const AddExpense = () => {
                                     {e === 'Credit/Debit Card' && 'Credit/Debit Card'}
                                     {e === 'Check' && 'Check'}
                             </button>
-                        </>
                         ))}
                     </div>
                 </div>

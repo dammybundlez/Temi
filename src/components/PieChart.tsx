@@ -61,7 +61,7 @@ const PieChart: React.FC<DonutChartProps> = ({ income, spent, size = 160 , gap =
         stroke="rgb(188, 62, 62)" 
         strokeWidth={strokeWidth}
         strokeDasharray={`${spentDash} ${circumference}`}
-        strokeDashoffset={-incomeDash - ((gap))}
+        strokeDashoffset={`${-incomeDash - ((gap))}`}
         strokeLinecap="round"
       />
     </svg>
