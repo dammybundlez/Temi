@@ -54,7 +54,7 @@ const AddExpense = ({ expense , setExpense } : AddExpenseProps) => {
   const now = new Date()
 
     const addExpense = () => {
-        if (!amount || !category || !payment.trim()) return
+        if (!amount || parseFloat(amount) <= 0 || !category || !payment.trim()) return
         const newExpense : Expense = {
             id : format(now , 'yyyy-MM-dd HH:mm:ss'),
             amount : parseFloat(amount),

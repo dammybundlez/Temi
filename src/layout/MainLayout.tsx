@@ -22,9 +22,9 @@ const MainLayout = () => {
   }, []);
 
   return (
-    <div className="font-archivo">
+    <div className="font-archivo bg-slate-50">
       <Navbar/>
-        <main className="bg-slate-50 flex flex-col mt-1 h-screen px-6 space-y-4 lg:flex-row lg:justify-between lg:items-start relative">
+        <main className=" flex flex-col mt-1 h-screen px-6 space-y-4 lg:flex-row lg:justify-between lg:items-start relative">
           <ExpenseDasboard expenses={expenses}  />
           <Transactions items={expenses} />
         </main>

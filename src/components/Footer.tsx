@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 text-center text-gray-500 py-4 text-sm dark:bg-gray-800 dark:text-gray-300">
+    <footer className="bg-gray-100 text-center mt-10 text-gray-500 py-4 text-sm dark:bg-gray-800 dark:text-gray-300">
       © {new Date().getFullYear()} Temi. All rights reserved.
     </footer>
   );

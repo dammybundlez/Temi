@@ -38,7 +38,7 @@ const ExpenseDasboard = ({ expenses } : ExpenseDashboardProps) => {
           setExpense(expense)
           setTotal(total)
         }
-      }, [expenses])
+      }, [])
   
   return (
     <div className="flex flex-col space-y-4 mt-4">

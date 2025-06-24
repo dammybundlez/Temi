@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className="relative">
-      <nav className='bg-white flex justify-between items-center py-2 shadow-md w-full px-6'>
+      <nav className='bg-white flex justify-between items-center py-2 shadow-sm w-full px-6 rounded-b-md'>
           <h1 className='text-4xl font-truculenta'><Link to='/'>TEMI</Link></h1>
           <p className="border-2 border-gray-400 rounded-full "><CgProfile className="w-5 h-5 m-3" /></p>
       </nav>
