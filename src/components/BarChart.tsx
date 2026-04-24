@@ -2,7 +2,7 @@
 import { useMemo } from 'react'
 import { useExpenseStore } from '../stores/useExpenseStore'
 import {BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'
-import { format, startOfWeek, addDays, isSameDay } from 'date-fns'
+import { startOfWeek, addDays, isSameDay } from 'date-fns'
 
 const formatAmount = (value: number) =>
   new Intl.NumberFormat('en-US', {
@@ -49,7 +49,7 @@ const WeeklyBarChart = () => {
     })
   }, [expenses, filter])
 
-  const maxAmount = Math.max(...data.map((d) => d.amount), 1)
+//   const maxAmount = Math.max(...data.map((d) => d.amount), 1)
 
   const hasData = data.some((d) => d.amount > 0)
 

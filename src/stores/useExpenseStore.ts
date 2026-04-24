@@ -1,10 +1,9 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { toast } from 'sonner'
-import { isToday, isThisWeek, isThisMonth, isThisYear, startOfDay, startOfWeek, startOfMonth, startOfYear, endOfYear, endOfMonth, endOfWeek, endOfDay, isWithinInterval } from 'date-fns'
+import { startOfDay, startOfWeek, startOfMonth, startOfYear, endOfYear, endOfMonth, endOfWeek, endOfDay, isWithinInterval } from 'date-fns'
 
-
-
+export type Type = 'expense' | 'income'
 
 export type FilterPeriod = 'all' | 'daily' | 'weekly' | 'monthly' | 'yearly'
 
