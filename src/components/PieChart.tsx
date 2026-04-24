@@ -1,71 +1,112 @@
-import React from 'react';
-
-type DonutChartProps = {
+interface DonutChartProps {
   income: number
   spent: number
   size?: number
-  gap?:number
+  strokeWidth?: number
+  gap?: number
+  className?: string
 }
 
-const PieChart: React.FC<DonutChartProps> = ({ income, spent, size = 160 , gap = 1 }) => {
-  const total = income + spent;
-  const radius = 14;
-  const strokeWidth = 5;
-  const circumference = 2 * Math.PI * radius;
+const DonutChart = ({
+  income,
+  spent,
+  size = 160,
+  strokeWidth = 5,
+  gap = 2,
+  className = '',
+}: DonutChartProps) => {
+  const radius = 14
+  const circumference = 2 * Math.PI * radius
+  const total = income + spent
+  const net = income - spent
 
-  const totalGap = 360 - gap
+  const hasData = total > 0
+  const isMixed = income > 0 && spent > 0
 
-  const incomeDegrees = (income / total) * totalGap
-  const spentDegrees = (spent / total) * totalGap
+  const gapAngle = isMixed ? gap : 0
+  const availableAngle = 360 - gapAngle
 
+  const incomeAngle = hasData ? (income / total) * availableAngle : 0
+  const spentAngle = hasData ? (spent / total) * availableAngle : 0
 
-  const incomeDash = (incomeDegrees / 360) * circumference;
-  const spentDash = (spentDegrees/ 360) * circumference;
+  const incomeArc = (incomeAngle / 360) * circumference
+  const spentArc = (spentAngle / 360) * circumference
+  const gapArc = (gapAngle / 360) * circumference
+
+  const spentOffset = isMixed ? -(incomeArc + gapArc) : 0
+
+  const formatCompact = (val: number) =>
+    new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      notation: 'compact',
+      maximumFractionDigits: 1,
+    }).format(val)
 
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 36 36"
-      className="rotate-[-90deg]"
+    <div
+      className={`relative inline-flex items-center justify-center ${className}`}
+      style={{ width: size, height: size }}
     >
-      {/* Background ring */}
-      <circle
-        cx="18"
-        cy="18"
-        r={radius}
-        fill="none"
-        stroke="#e5e7eb" 
-        strokeWidth={strokeWidth}
-      />
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 36 36"
+        className="-rotate-90"
+      >
+        <circle
+          cx="18"
+          cy="18"
+          r={radius}
+          fill="none"
+          stroke="#e2e8f0"
+          strokeWidth={strokeWidth}
+        />
 
-      {/* Income arc */}
-      <circle
-        cx="18"
-        cy="18"
-        r={radius}
-        fill="none"
-        stroke="#c6e6b8" 
-        strokeWidth={strokeWidth}
-        strokeDasharray={`${incomeDash} ${circumference}`}
-        strokeDashoffset={3}
-        strokeLinecap="round"
-      />
+        {hasData && (
+          <>
+           <circle
+              cx="18"
+              cy="18"
+              r={radius}
+              fill="none"
+              stroke="#10b981"
+              strokeWidth={strokeWidth}
+              strokeDasharray={`${incomeArc} ${circumference}`}
+              strokeLinecap="round"
+              className="transition-all duration-700 ease-out"
+            />
 
-      {/* Spent arc (offset by incomeDash + gap) */}
-      <circle
-        cx="18"
-        cy="18"
-        r={radius}
-        fill="none"
-        stroke="rgb(188, 62, 62)" 
-        strokeWidth={strokeWidth}
-        strokeDasharray={`${spentDash} ${circumference}`}
-        strokeDashoffset={`${-incomeDash - ((gap))}`}
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-};
+            <circle
+              cx="18"
+              cy="18"
+              r={radius}
+              fill="none"
+              stroke="#f43f5e"
+              strokeWidth={strokeWidth}
+              strokeDasharray={`${spentArc} ${circumference}`}
+              strokeDashoffset={spentOffset}
+              strokeLinecap="round"
+              className="transition-all duration-700 ease-out"
+            />
+          </>
+        )}
+      </svg>
 
-export default PieChart;
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+        <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
+          Net
+        </span>
+        <span
+          className={`text-sm font-bold ${
+            net >= 0 ? 'text-emerald-600' : 'text-rose-600'
+          }`}
+        >
+          {formatCompact(net)}
+        </span>
+      </div>
+    </div>
+  )
+}
+
+export default DonutChart

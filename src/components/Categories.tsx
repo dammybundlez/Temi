@@ -1,61 +1,73 @@
+import { ChevronDown } from "lucide-react"
+
 interface CategoryProps {
-    type : 'income' | 'expense'
-    value : string
-    onChange : ( value : string ) => void
+  type: 'income' | 'expense'
+  value: string
+  onChange: (value: string) => void
+  label?: string
 }
 
 const incomeCategories = [
-  { value: '💼 Salary / Wages' },
-  { value: '🧑‍💻 Freelance' },
-  { value: '🏢 Business Income' },
-  { value: '📈 Investment Returns' },
-  { value: '🎁 Gifts' },
-  { value: '💸 Dividends' },
-  { value: '👴 Pension'},
-];
+  { value: 'Salary / Wages', emoji: '💼' },
+  { value: 'Freelance', emoji: '🧑‍💻' },
+  { value: 'Business Income', emoji: '🏢' },
+  { value: 'Investment Returns', emoji: '📈' },
+  { value: 'Gifts', emoji: '🎁' },
+  { value: 'Dividends', emoji: '💸' },
+  { value: 'Pension', emoji: '👴' },
+]
 
 const expenseCategories = [
-  { value: '🍔 Food & Groceries', },
-  { value: '💡 Utilities' },
-  { value: '🏠 Rent / Mortgage' },
-  { value: '🎮 Entertainment' },
-  { value: '🛡️ Insurance',  },
-  { value: '✈️ Travel',  },
-  { value: '📺 Subscriptions'},
-  { value: 'Others'},
+  { value: 'Food & Groceries', emoji: '🍔' },
+  { value: 'Utilities', emoji: '💡' },
+  { value: 'Rent / Mortgage', emoji: '🏠' },
+  { value: 'Entertainment', emoji: '🎮' },
+  { value: 'Insurance', emoji: '🛡️' },
+  { value: 'Travel', emoji: '✈️' },
+  { value: 'Subscriptions', emoji: '📺' },
+  { value: 'Others', emoji: '📝' },
+]
 
-];
-
-const Categories = ({type , value , onChange} : CategoryProps) => {
-  const options = type === 'income' ? incomeCategories : expenseCategories;
+const Categories = ({ type, value, onChange, label }: CategoryProps) => {
+  const options = type === 'income' ? incomeCategories : expenseCategories
 
   return (
-    <div className="relative w-full">
-      <select
-        title="select"
-        name="select"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="block appearance-none w-full bg-white  border border-[#c6e6b8] text-gray-700 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:ring-2 focus:ring-blue-400"
+    <div className="w-full space-y-1.5">
+      {label && (
+        <label className="block text-sm font-medium text-slate-700">
+          {label}
+        </label>
+      )}
+      
+      <div className="relative">
+        <select
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`
+            w-full appearance-none rounded-xl border bg-white py-2.5 pl-4 pr-10 text-sm 
+            text-slate-900 placeholder:text-slate-400
+            transition-colors duration-200
+            focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900
+            ${value ? 'border-slate-300' : 'border-slate-200'}
+            hover:border-slate-300
+          `}
         >
-        <option value="">Select {type} category</option>
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.value}
+          <option value="" disabled>
+            Select a {type} category
           </option>
-        ))}
-      </select>
-      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-600 dark:text-gray-300">
-        <svg
-          className="fill-current h-4 w-4"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          >
-          <path d="M5.516 7.548l4.484 4.486 4.485-4.486L15.484 9l-6 6-6-6z" />
-        </svg>
+          {options.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.emoji} {opt.value}
+            </option>
+          ))}
+        </select>
+
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
+          <ChevronDown className="h-4 w-4" />
+        </div>
       </div>
     </div>
-  );
+  )
 }
 
 export default Categories
